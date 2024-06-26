@@ -1,31 +1,26 @@
 from abc import ABC, abstractmethod
 from Event import Event
 from typing import Optional, Type
+import StateMachine as SM
 
 
 class State(ABC):
     @abstractmethod
-    def enter(self, machine: 'StateMachine'):
+    def enter(self, machine: 'SM'):
         pass
 
     @abstractmethod
-    def update(self, machine: 'StateMachine'):
+    def update(self, machine: 'SM'):
         pass
 
     @abstractmethod
-    def exit(self, machine: 'StateMachine'):
+    def exit(self, machine: 'SM'):
         pass
 
 
-    def on_event(self, event: Event, machine: 'StateMachine'):
+    def on_event(self, event: Event, machine: 'SM'):
             pass
 
     @abstractmethod
     def __str__(self):
-        pass
-
-
-class StateMachine(ABC):
-    @abstractmethod
-    def change_state(self, state_class: Type[State]):
         pass

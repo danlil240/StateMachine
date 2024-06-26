@@ -9,12 +9,8 @@ def main():
 
     sm.register_state(StateA)
     sm.register_state(StateB)
-    sm.register_state(StateC)
-
-    sm.change_state(StateA)
-    
-    while not sm.finish:
-        sm.update()
+    sm.register_state(StateC)    
+    sm.run(StateA)
         
         
 if __name__ == "__main__":

@@ -1,9 +1,8 @@
 import logging
-
-from abc import ABC, abstractmethod
 from State import State
 from Event import Event
 from typing import Optional, Type
+from StateMachine import StateMachine
 
 class StateA(State):
     def __init__(self):
@@ -22,9 +21,9 @@ class StateA(State):
         self.i += 1
         machine.logger.info(f'State A  i: {self.i}')
         if self.i == 5:
-            machine.set_next_state(StateB)
+            machine.change_state(StateB,'state a update')
         elif self.i > 6:
-            machine.finish = True
+            machine.stop()
     
     def exit(self, machine: 'StateMachine'):
         pass
@@ -45,7 +44,9 @@ class StateB(State):
             machine.set_next_state(StateC)
 
     def update(self, machine: 'StateMachine'):
-        machine.set_next_state(StateC)
+        machine.change_state(StateC,'state b update')
+        return
+        machine.logger.info('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         
     def exit(self, machine: 'StateMachine'):
         pass
@@ -58,7 +59,9 @@ class StateC(State):
         pass
 
     def update(self, machine: 'StateMachine'):
-        machine.set_next_state(StateA)
+        machine.change_state(StateA,'state c update')
+        machine.logger.info('update c')
+
         
     def exit(self, machine: 'StateMachine'):
         pass
@@ -67,15 +70,3 @@ class StateC(State):
         return 'StateC'
 
     
-
-    
-class StateMachine(ABC):
-    logger = logging.getLogger(__name__)
-    @abstractmethod
-    def change_state(self, state_class: Type[State]):
-        pass
-
-    @abstractmethod
-    def set_next_state(self, state_class: Type[State]):
-        pass
-
